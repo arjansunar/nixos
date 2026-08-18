@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "a";
@@ -18,6 +19,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    pkgs.tree
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -73,4 +75,40 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+
+  # Gnome extensions
+  programs.gnome-shell = {
+    enable = true;
+
+    extensions = [
+      {
+        package = pkgs.gnomeExtensions.dash-to-panel;
+      }
+    ];
+  };
+  
+  dconf = {
+    enable = true;
+
+  # settings = {
+  #   "org/gnome/shell/extensions/dash-to-panel" = {
+  #     panel-position = "BOTTOM";
+  #     panel-size = 36;
+  #     panel-uses-custom-bg = true;
+  #     panel-bg-color = "#1e1e2e";
+  #     panel-uses-custom-opacity = true;
+  #     panel-opacity = 0.9;
+  #   };
+  # };
+  };
+
+  # dev machine setup
+	programs = {
+	  neovim.enable = true;
+	  starship.enable = true;
+	  zoxide.enable = true;
+	  lazygit.enable = true;
+	};
+
 }
