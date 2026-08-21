@@ -2,25 +2,36 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
-  imports = [ # Include the results of the hardware scan.
-	  ./hardware-configuration.nix
-	  ../../modules/kanata.nix
-	  ./kanata.nix
-	  inputs.home-manager.nixosModules.default
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/kanata.nix
+    ./kanata.nix
+    inputs.home-manager.nixosModules.default
+  ];
 
   # enable flakes
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot = {
+    # Bootloader.
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -38,13 +49,14 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  services = {
+    # Enable the X11 windowing system.
+    # You can disable this if you're only using the Wayland session.
+    xserver.enable = true;
+    # Enable the KDE Plasma Desktop Environment.
+    displayManager.sddm.enable = true;
+    desktopManager.plasma6.enable = true;
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -73,63 +85,86 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-  programs.fish.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."rjan" = {
     isNormalUser = true;
     description = "rjan";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     shell = pkgs.fish;
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
   # home manager users
   home-manager = {
-    extraSpecialArgs = { inherit inputs;};
+    extraSpecialArgs = { inherit inputs; };
     users = {
       "rjan" = import ./home.nix;
     };
-  }; 
+  };
 
-  # setup git
-  programs.git = {
-    enable = true;
-    config = {
-      user.name = "arjansunar";
-      user.email = "arjan.gahatrajsunar@gmail.com";
-      init.defaultBranch = "main";
-      pull.rebase = true;
+  programs = {
+    fish.enable = true;
+    firefox.enable = true;
+    git = {
+      enable = true;
+      config = {
+        user.name = "arjansunar";
+        user.email = "arjan.gahatrajsunar@gmail.com";
+        init.defaultBranch = "main";
+        pull.rebase = true;
+      };
     };
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    neovim
+    tree-sitter
+    tree
+    stow
+    mise
+    gh
+    nerd-fonts.jetbrains-mono
+    eza
+    bat
+    fzf
+    yazi
+    gcc
+    zellij
+
+    # nix lang specifics
+    nixfmt
+    statix
   ];
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged programs
+    # here, NOT in environment.systemPackages
+  ];
 
   # Docker setups
   virtualisation.docker = {
-	  # Consider disabling the system wide Docker daemon
-	  enable = false;
+    # Consider disabling the system wide Docker daemon
+    enable = false;
 
-	  rootless = {
-	    enable = true;
-	    setSocketVariable = true;
-	  };
- };
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -150,12 +185,17 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "26.05"; # Did you read the comment?
+  system = {
+    # This value determines the NixOS release from which the default
+    # settings for stateful data, like file locations and database versions
+    # on your system were taken. It‘s perfectly fine and recommended to leave
+    # this value at the release version of the first install of this system.
+    # Before changing this value read the documentation for this option
+    # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+    stateVersion = "26.05"; # Did you read the comment?
+    # Automatic updates
+    autoUpgrade.enable = true;
+    autoUpgrade.dates = "weekly";
+  };
 
 }

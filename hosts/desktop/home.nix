@@ -19,20 +19,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    neovim
-    tree-sitter
-
-    tree
-    stow
-    mise
-    gh
-    nerd-fonts.jetbrains-mono
-    eza
-    bat
-    fzf
-    yazi
-    gcc
-    zellij
+    
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -123,11 +110,11 @@
 	  lazygit.enable = true;
 	  
     kitty = {
-	    enable = true;
-	    font = {
-	    name = "JetBrainsMono Nerd Font";
-	    size = 13.0;
-	  };
+      enable = true;
+      font = {
+        name = "JetBrainsMono Nerd Font";
+        size = 13.0;
+      };
 
 	  settings = {
 	    # Window
