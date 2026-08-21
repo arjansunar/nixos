@@ -73,12 +73,14 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+  programs.fish.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."rjan" = {
     isNormalUser = true;
     description = "rjan";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
+    shell = pkgs.fish;
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
