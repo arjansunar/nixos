@@ -64,6 +64,7 @@
     variant = "";
   };
 
+  services.envfs.enable = true;
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -111,6 +112,12 @@
   };
 
   programs = {
+    nix-ld.enable = true;
+    nix-ld.libraries = with pkgs; [
+      # Add any missing dynamic libraries for unpackaged programs
+      # here, NOT in environment.systemPackages
+    ];
+
     fish.enable = true;
     firefox.enable = true;
     git = {
@@ -122,6 +129,15 @@
         pull.rebase = true;
       };
     };
+    # mise = {
+    #   enable = true;
+    #   enableFishIntegration = true;
+    #   globalConfig = ''
+    #     [tools]
+    #       node = '20'
+    #       python = '3.10'
+    #   '';
+    # };
   };
 
   # Allow unfree packages
@@ -130,29 +146,30 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # system libraries
+    gcc
+    gnumake
+    pkg-config
+
     neovim
     tree-sitter
     tree
     stow
-    mise
     gh
     nerd-fonts.jetbrains-mono
     eza
     bat
     fzf
     yazi
-    gcc
     zellij
+
+    python3
+
+    #inputs.mise-flake.packages.${system}.mise
 
     # nix lang specifics
     nixfmt
     statix
-  ];
-
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged programs
-    # here, NOT in environment.systemPackages
   ];
 
   # Docker setups
