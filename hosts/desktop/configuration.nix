@@ -113,11 +113,27 @@
 
   programs = {
     nix-ld.enable = true;
-    nix-ld.libraries = with pkgs; [
+    nix-ld.libraries = [
       # Add any missing dynamic libraries for unpackaged programs
       # here, NOT in environment.systemPackages
     ];
+    helium = {
 
+      enable = true;
+      # 🎯 Policies - Written to /etc/chromium/policies/managed/helium-nixos.json
+      # Also written to /etc/helium/policies/managed/ for future compatibility
+      policies = {
+        "BrowserSignin" = 0;
+        "PasswordManagerEnabled" = false;
+        "SyncDisabled" = true;
+        "SpellcheckEnabled" = true;
+        "SpellcheckLanguage" = [ "en-US" ];
+        "ExtensionInstallForcelist" = [
+          # Pre-install extensions
+          "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
+        ];
+      };
+    };
     fish.enable = true;
     firefox.enable = true;
     git = {

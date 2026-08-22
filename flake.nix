@@ -8,7 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # mise-flake.url = "github:jdx/mise";
+    helium = {
+      url = "github:oxcl/nix-flake-helium-browser";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
 
@@ -16,7 +19,7 @@
     {
       self,
       nixpkgs,
-      # mise-flake,
+      helium,
       ...
     }@inputs:
     {
@@ -27,6 +30,7 @@
         modules = [
           ./hosts/desktop/configuration.nix
           inputs.home-manager.nixosModules.default
+          helium.nixosModules.default
         ];
       };
     };
