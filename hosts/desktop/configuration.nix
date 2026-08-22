@@ -153,6 +153,9 @@
   environment.systemPackages = with pkgs; [
     localsend
     pass
+    gnupg
+    pinentry-curses
+    wl-clipboard
 
     # system libraries
     gcc
