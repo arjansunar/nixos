@@ -147,7 +147,9 @@
     gnumake
     pkg-config
     python3
-    mysql
+    # mysqlclient dependencies for pip package
+    mariadb
+    mariadb-connector-c
 
     localsend
     pass
@@ -231,6 +233,12 @@
     # Automatic updates
     autoUpgrade.enable = true;
     autoUpgrade.dates = "weekly";
+  };
+
+  environment.variables = {
+    # mysqlclient dependencies for pip package
+    MYSQLCLIENT_CFLAGS = "-I${pkgs.mariadb-connector-c.dev}/include/mariadb";
+    MYSQLCLIENT_LDFLAGS = "-L${pkgs.mariadb-connector-c}/lib/mariadb -lmariadb";
   };
 
 }
