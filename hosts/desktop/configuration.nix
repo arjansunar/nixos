@@ -150,6 +150,8 @@
     # mysqlclient dependencies for pip package
     mariadb
     mariadb-connector-c
+    # dependency for magic file detection
+    file
 
     localsend
     pass
@@ -239,6 +241,7 @@
     # mysqlclient dependencies for pip package
     MYSQLCLIENT_CFLAGS = "-I${pkgs.mariadb-connector-c.dev}/include/mariadb";
     MYSQLCLIENT_LDFLAGS = "-L${pkgs.mariadb-connector-c}/lib/mariadb -lmariadb";
+    LD_LIBRARY_PATH = "${pkgs.file}/lib";
   };
 
 }
