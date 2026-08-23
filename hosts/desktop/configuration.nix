@@ -84,6 +84,8 @@
       "networkmanager"
       "wheel"
       "docker"
+      "kvm"
+      "libvirtd"
     ];
     shell = pkgs.fish;
     packages = with pkgs; [
@@ -184,13 +186,16 @@
   ];
 
   # Docker setups
-  virtualisation.docker = {
-    # Consider disabling the system wide Docker daemon
-    enable = false;
+  virtualisation = {
+    libvirtd.enable = true;
+    docker = {
+      # Consider disabling the system wide Docker daemon
+      enable = false;
 
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
+      rootless = {
+        enable = true;
+        setSocketVariable = true;
+      };
     };
   };
   networking = {
