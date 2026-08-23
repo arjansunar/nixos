@@ -183,6 +183,8 @@
     statix
 
     lutris
+    mesa
+    vulkan-tools
   ];
 
   # Docker setups
