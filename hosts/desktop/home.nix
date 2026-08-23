@@ -125,7 +125,7 @@
       settings = {
         # Window
         hide_window_decorations = "yes";
-        window_padding_width = 8;
+        window_padding_width = 0;
         window_margin_width = 0;
 
         # Appearance

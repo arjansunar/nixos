@@ -153,6 +153,9 @@
     # dependency for magic file detection
     file
 
+    android-studio
+    android-tools
+    signal-desktop
     localsend
     pass
     gnupg
