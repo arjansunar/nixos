@@ -183,6 +183,8 @@
     lutris
     mesa
     vulkan-tools
+
+    networkmanager-openvpn
   ];
 
   # Docker setups
@@ -208,7 +210,12 @@
     # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
     # Enable networking
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      plugins = with pkgs; [
+        networkmanager-openvpn
+      ];
+    };
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
@@ -226,6 +233,8 @@
     # Open ports in the firewall.
     firewall.allowedTCPPorts = [
       53317
+      8081
+      8000
     ];
   };
   # networking.firewall.allowedUDPPorts = [ ... ];
