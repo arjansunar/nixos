@@ -185,6 +185,7 @@
     vulkan-tools
 
     networkmanager-openvpn
+    steam-run
   ];
 
   # Docker setups
