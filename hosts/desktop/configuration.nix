@@ -264,8 +264,8 @@
     MYSQLCLIENT_CFLAGS = "-I${pkgs.mariadb-connector-c.dev}/include/mariadb";
     MYSQLCLIENT_LDFLAGS = "-L${pkgs.mariadb-connector-c}/lib/mariadb -lmariadb";
     LD_LIBRARY_PATH = "${pkgs.file}/lib";
-    ANDROID_HOME = "$HOME/.android/Andriod/Sdk";
-    ANDROID_SDK_ROOT = "$HOME/.android/Andriod/Sdk";
+    ANDROID_HOME = "$HOME/.android/Android/Sdk";
+    ANDROID_SDK_ROOT = "$HOME/.android/Android/Sdk";
     JAVA_HOME = "${pkgs.jdk17}";
   };
 
