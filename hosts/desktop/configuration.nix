@@ -206,6 +206,9 @@
     };
   };
   networking = {
+    hosts = {
+      "10.199.11.163" = [ "pass.konnectcraft.com" ];
+    };
 
     hostName = "nixos"; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
