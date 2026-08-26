@@ -104,9 +104,11 @@
 
   programs = {
     nix-ld.enable = true;
-    nix-ld.libraries = [
+    nix-ld.libraries = with pkgs; [
       # Add any missing dynamic libraries for unpackaged programs
       # here, NOT in environment.systemPackages
+      stdenv.cc.cc.lib
+      zlib
     ];
     helium = {
 
@@ -141,6 +143,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  nixpkgs.config.android_sdk.accept_license = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -157,6 +160,7 @@
 
     android-studio
     android-tools
+    jdk17
     signal-desktop
     localsend
     pass
@@ -260,6 +264,9 @@
     MYSQLCLIENT_CFLAGS = "-I${pkgs.mariadb-connector-c.dev}/include/mariadb";
     MYSQLCLIENT_LDFLAGS = "-L${pkgs.mariadb-connector-c}/lib/mariadb -lmariadb";
     LD_LIBRARY_PATH = "${pkgs.file}/lib";
+    ANDROID_HOME = "$HOME/.android/Andriod/Sdk";
+    ANDROID_SDK_ROOT = "$HOME/.android/Andriod/Sdk";
+    JAVA_HOME = "${pkgs.jdk17}";
   };
 
 }
