@@ -158,6 +158,7 @@
     # dependency for magic file detection
     file
 
+    beekeeper-studio
     android-studio
     android-tools
     jdk17
@@ -208,6 +209,7 @@
   networking = {
     hosts = {
       "10.199.11.163" = [ "pass.konnectcraft.com" ];
+      "192.168.1.66" = [ "agms" ];
     };
 
     hostName = "nixos"; # Define your hostname.
@@ -249,6 +251,8 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  # agms-dev hosting nginx on port 80
+  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
   system = {
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
