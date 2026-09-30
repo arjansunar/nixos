@@ -109,6 +109,7 @@
       # here, NOT in environment.systemPackages
       stdenv.cc.cc.lib
       zlib
+      glib
     ];
     helium = {
 
@@ -152,12 +153,15 @@
     gnumake
     pkg-config
     python3
+    postgresql
     # mysqlclient dependencies for pip package
     mariadb
     mariadb-connector-c
     # dependency for magic file detection
     file
+    glib
 
+    gettext
     beekeeper-studio
     android-studio
     android-tools
