@@ -173,6 +173,7 @@
     pinentry-curses
     wl-clipboard
 
+    zed-editor
     neovim
     tree-sitter
     tree
