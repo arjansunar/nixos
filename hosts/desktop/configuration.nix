@@ -196,7 +196,10 @@
 
     networkmanager-openvpn
     steam-run
+    cloudflare-warp
   ];
+
+  services.cloudflare-warp.enable = true;
 
   # Docker setups
   virtualisation = {
